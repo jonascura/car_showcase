@@ -7,3 +7,8 @@ export interface CustomButtonProps {
   MouseEventHandler<HTMLButtonElement>
   btnType: "button" | "submit"
 }
+
+export interface SerachManufacturerProps {
+  manufacturer: string;
+  setManufacturer: (manufacturer: string) => void;
+}
