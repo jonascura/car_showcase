@@ -3,10 +3,10 @@
 import { useState, Fragment } from "react";
 import Image from "next/image"
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Transition } from "@headlessui/react";
-import { SerachManufacturerProps } from "@/types";
+import { SearchManufacturerProps } from "@/types";
 import { manufacturers } from "@/constants";
 
-const SearchManufacturer = ({ manufacturer, setManufacturer }: SerachManufacturerProps) => {
+const SearchManufacturer = ({ manufacturer, setManufacturer }: SearchManufacturerProps) => {
 
   const [query, setQuery] = useState('');
 
@@ -24,6 +24,7 @@ const SearchManufacturer = ({ manufacturer, setManufacturer }: SerachManufacture
     <div className="search-manufacturer">
       <Combobox value={manufacturer} onChange={setManufacturer}>
         <div className="relative w-full">
+          {/* Button for the combobox. Click on the icon to see the complete dropdown */}
           <ComboboxButton className="absolute top-[14px]">
             <Image
                 src='/car-logo.svg'
@@ -34,12 +35,15 @@ const SearchManufacturer = ({ manufacturer, setManufacturer }: SerachManufacture
             />
           </ComboboxButton>
 
+          {/* Input field for searching */}
           <ComboboxInput 
             className="search-manufacturer__input"
             placeholder="Volkswagen..."
             displayValue={(item: string) => item}
             onChange={(e) => setQuery(e.target.value)}
           />
+
+        {/* Transition for displaying the options */}
         <Transition
           as={Fragment} // group multiple elements without introducing an additional DOM node i.e., <></>
           leave='transition ease-in duration-100'
