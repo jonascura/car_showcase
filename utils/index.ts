@@ -50,19 +50,24 @@ export async function fetchCars(filters: FilterProps) {
     "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
   };
 
-  // Set the required headers for the API request
-  const response = await fetch(
-    `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}&model=${model}&limit=${limit}&fuel_type=${fuel}`,
-    {
-      headers: headers,
+  const url = `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}&model=${model}&limit=${limit}&fuel_type=${fuel}`;
+
+  try {
+    const response = await fetch(url, { headers });
+
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status} ${response.statusText}`);
     }
-  );
 
-  // Parse the response as JSON
-  const result = await response.json();
-
-  return result;
+    const result = await response.json();
+    console.log("API Response:", result);
+    return result;
+  } catch (error) {
+    console.error("Error fetching cars:", error);
+    return null; // Handle errors gracefully
+  }
 }
+
 
 export const generateCarImageUrl = (car: CarProps, angle?: string) => {
   const url = new URL("https://cdn.imagin.studio/getimage");
